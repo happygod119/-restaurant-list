@@ -36,9 +36,9 @@ npm run start
 Express is listening on http://localhost:3000
 ```
 
-##開發工具
-*Node.js v14.16.0
-*Express ^4.17.2
-*Express-Handlebars ^3.0.0
-*Bootstrap 4.3.1
-*Font-awesome 5.8.1
+## 開發工具
+* Node.js v14.16.0
+* Express ^4.17.2
+* Express-Handlebars ^3.0.0
+* Bootstrap 4.3.1
+* Font-awesome 5.8.1
