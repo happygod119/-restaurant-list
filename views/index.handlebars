@@ -32,8 +32,8 @@
       <div class="card-columns">
         {{! each 迴圈 }}
         {{#each restaurant}}
-          <a href="/restaurants/{{this.id}}" class="text-secondary">
-            <div class="card mb-3">
+          <a href="/restaurants/{{this._id}}" class="text-secondary">
+            <div class="card mb-1">
               <img
                 class="card-img-top"
                 src="{{this.image}}"
@@ -51,7 +51,6 @@
                   {{this.rating}}
                   <i class="fas fa-star fa-xs"></i>
                 </span>
-
               </div>
             </div>
           </a>
