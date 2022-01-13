@@ -8,7 +8,7 @@ const port = 3000;
 const exphbs = require("express-handlebars");
 const restaurantList = require("./restaurant.json");
 
-mongoose.connect("mongodb://localhost/Restaurant"); //* 設定連線到 mongoDB
+mongoose.connect("mongodb://localhost/restaurant-list"); //* 設定連線到 mongoDB
 
 const db = mongoose.connection; //* 取得資料庫連線狀態
 
