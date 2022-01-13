@@ -6,6 +6,9 @@ const port = 3000;
 //載入handlebars
 const exphbs = require("express-handlebars");
 
+//- 引用 body-parser
+const bodyParser = require("body-parser");
+
 //- 載入 mongoose
 const mongoose = require("mongoose");
 
@@ -30,11 +33,25 @@ app.set("view engine", "handlebars");
 //使用public設定
 app.use(express.static("public"));
 
+//-使用body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+
 //- 瀏覽首頁
 app.get("/", (req, res) => {
   Restaurant.find()
     .lean()
     .then((restaurant) => res.render("index", { restaurant }))
+    .catch((error) => console.log(error));
+});
+
+//- 新增資料
+app.get("/restaurants/new", (req, res) => {
+  res.render("new");
+});
+
+app.post("/restaurants", (req, res) => {
+  return Restaurant.create(req.body)
+    .then(() => res.redirect("/"))
     .catch((error) => console.log(error));
 });
 
