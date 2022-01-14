@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-//載入handlebars
+// 載入handlebars
 const exphbs = require("express-handlebars");
 
 //- 引用 body-parser
@@ -12,7 +12,8 @@ const bodyParser = require("body-parser");
 //- 載入 mongoose
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/restaurant-list"); //- 設定連線到 mongoDB
+//- 設定連線到 mongoDB
+mongoose.connect("mongodb://localhost/restaurant-list");
 
 //- 取得資料庫連線狀態
 const db = mongoose.connection;
@@ -73,7 +74,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
     .then((restaurant) => res.render("edit", { restaurant }))
     .catch((error) => console.log(error));
 });
-//-修改資料 Update 動作
+//- 修改資料 Update 動作
 app.post("/restaurants/:id/edit", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
@@ -90,6 +91,15 @@ app.post("/restaurants/:id/edit", (req, res) => {
       return restaurant.save();
     })
     .then(() => res.redirect(`/restaurants/${id}`))
+    .catch((error) => console.log(error));
+});
+
+//- 刪除資料
+app.post("/restaurants/:id/delete", (req, res) => {
+  const id = req.params.id;
+  return Restaurant.findById(id)
+    .then((restaurant) => restaurant.remove())
+    .then(() => res.redirect("/"))
     .catch((error) => console.log(error));
 });
 
