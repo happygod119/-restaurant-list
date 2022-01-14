@@ -69,10 +69,11 @@
       <label for="phone" class="form-label">餐廳電話：</label>
       <input
         name="phone"
-        type="text"
+        type="tel"
         id="restaurant-phone"
         class="form-control"
-        placeholder=" 02 2984 2977..."
+        placeholder=" 02-2984-2977..."
+        pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
         required
       />
     </div>
@@ -86,6 +87,8 @@
         placeholder=" https://..."
         required
       />
+      <div class="valid-feedback"></div>
+      <div class="invalid-feedback"></div>
     </div>
     <div class="mb-3">
       <label for="rating" class="form-label">評分:</label>

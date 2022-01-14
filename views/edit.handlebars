@@ -1,7 +1,7 @@
 <h2 class="text-center mt-5" id="form-title">修改餐廳介紹</h2>
 
 <div class="container">
-  <form action="./restaurants/{{this._id}}/edit" method="POST">
+  <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
     <div class="mb-3">
       <label for="name" class="form-label">餐廳名稱:</label>
       <input
@@ -10,6 +10,7 @@
         id="restaurant-name"
         class="form-control"
         placeholder="星巴克..."
+        value="{{restaurant.name}}"
         required
       />
     </div>
@@ -21,6 +22,7 @@
         id="restaurant-name_en"
         class="form-control"
         placeholder="Starbucks..."
+        value="{{restaurant.name_en}}"
         required
       />
     </div>
@@ -33,6 +35,7 @@
         id="restaurant-category"
         class="form-control"
         placeholder="咖啡..."
+        value="{{restaurant.category}}"
         required
       />
       <datalist id="categories">
@@ -51,6 +54,7 @@
         type="url"
         class="form-control"
         placeholder=" https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQqDnLVyvnZSbhhYNO45FsaUm4OoSi8RUWlsEQYhI2Fn5tJH9cH..."
+        value="{{restaurant.image}}"
         required
       />
     </div>
@@ -62,17 +66,20 @@
         id="restaurant-location"
         class="form-control"
         placeholder="241新北市三重區正義北路140號..."
+        value="{{restaurant.location}}"
         required
       />
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">餐廳電話：</label>
       <input
+        type="tel"
         name="phone"
-        type="text"
         id="restaurant-phone"
         class="form-control"
-        placeholder=" 02 2984 2977..."
+        placeholder=" 02-2984-2977..."
+        pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+        value="{{restaurant.phone}}"
         required
       />
     </div>
@@ -84,6 +91,7 @@
         id="restaurant-google_map"
         class="form-control"
         placeholder=" https://..."
+        value="{{restaurant.google_map}}"
         required
       />
     </div>
@@ -98,6 +106,7 @@
         min="0"
         max="5"
         placeholder="0 ~ 5"
+        value="{{restaurant.rating}}"
         required
       />
     </div>
@@ -113,6 +122,7 @@
         id="restaurant-description"
         class="form-control"
         placeholder=" 啟發並滋潤人們的心靈，在每個人、每一杯、每個社區中皆能體現。秉持續追求卓越以及實踐企業使命與價值觀，我們透過每一杯咖啡的傳遞，將獨特的星巴克體驗帶入每位顧客的生活中。..."
+        value="{{restaurant.description}}"
         required
       ></textarea>
     </div>
