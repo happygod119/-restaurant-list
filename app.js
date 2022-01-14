@@ -25,6 +25,7 @@ db.once("open", () => {
 
 //- 載入 Restaurant model
 const Restaurant = require("./models/restaurant");
+const restaurant = require("./models/restaurant");
 
 //設定使用handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -44,23 +45,24 @@ app.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//- 新增資料
+//- 新增資料 new頁面
 app.get("/restaurants/new", (req, res) => {
   res.render("new");
 });
-
+//- 新增資料  Create 動作
 app.post("/restaurants", (req, res) => {
   return Restaurant.create(req.body)
     .then(() => res.redirect("/"))
     .catch((error) => console.log(error));
 });
 
-// restaurant show
+//- 瀏覽詳細資料 
 app.get("/restaurants/:id", (req, res) => {
-  const restaurant = restaurantList.results.find(
-    (item) => item.id.toString() === req.params.id
-  );
-  res.render("show", { restaurant });
+  const id = req.params.id;
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render("show", { restaurant }))
+    .catch((error) => console.log(error));
 });
 
 //search bar
