@@ -66,7 +66,7 @@ app.get("/restaurants/:id", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//- 修改資料
+//- 修改資料 edit頁面
 app.get("/restaurants/:id/edit", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
@@ -105,14 +105,24 @@ app.post("/restaurants/:id/delete", (req, res) => {
 
 //search bar
 app.get("/search", (req, res) => {
-  const keyword = req.query.keyword;
-  const restaurants = restaurantList.results.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(keyword.toLowerCase()) || //- 餐廳
-      item.category.toLowerCase().includes(keyword) //- 類別
-    );
-  });
-  res.render("index", { restaurant: restaurants, keyword: keyword });
+  if (!req.query.keywords) {
+    res.redirect("/");
+  }
+
+  const keywords = req.query.keywords;
+  const keyword = req.query.keywords.trim().toLowerCase();
+
+  Restaurant.find({})
+    .lean()
+    .then((restaurant) => {
+      const filterRestaurantsData = restaurant.filter(
+        (data) =>
+          data.name.toLowerCase().includes(keyword) ||
+          data.category.includes(keyword)
+      );
+      res.render("index", { restaurant: filterRestaurantsData, keywords });
+    })
+    .catch((err) => console.log(err));
 });
 
 // 設定port
