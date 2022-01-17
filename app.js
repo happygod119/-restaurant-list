@@ -9,6 +9,9 @@ const exphbs = require("express-handlebars");
 //- 引用 body-parser
 const bodyParser = require("body-parser");
 
+//- 載入 method-override
+const methodOverride = require('method-override')
+
 //- 載入 mongoose
 const mongoose = require("mongoose");
 
@@ -37,6 +40,9 @@ app.use(express.static("public"));
 
 //-使用body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//- 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 //- 瀏覽首頁
 app.get("/", (req, res) => {
@@ -75,7 +81,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
     .catch((error) => console.log(error));
 });
 //- 修改資料 Update 動作
-app.post("/restaurants/:id/edit", (req, res) => {
+app.put("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
     .then((restaurant) => {
@@ -95,7 +101,7 @@ app.post("/restaurants/:id/edit", (req, res) => {
 });
 
 //- 刪除資料
-app.post("/restaurants/:id/delete", (req, res) => {
+app.delete("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
     .then((restaurant) => restaurant.remove())

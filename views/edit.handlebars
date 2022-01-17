@@ -1,7 +1,7 @@
 <h2 class="text-center mt-5" id="form-title">修改餐廳介紹</h2>
 
 <div class="container">
-  <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+  <form action="/restaurants/{{restaurant._id}}?_method=PUT"" method="POST">
     <div class="mb-3">
       <label for="name" class="form-label">餐廳名稱:</label>
       <input
