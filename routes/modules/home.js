@@ -13,9 +13,6 @@ router.get("/", (req, res) => {
 
 //search bar
 router.get("/search", (req, res) => {
-  if (!req.query.keywords) {
-    res.redirect("/");
-  }
 
   const keywords = req.query.keywords;
   const keyword = req.query.keywords.trim().toLowerCase();
