@@ -1,51 +1,37 @@
 <!-- search bar -->
 <div class="container search-bar mt-5">
-  <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-between">
-    <div class="col ">
-      <div class="mb-1">
-        <form action="/search">
-          <div class="input-group">
-            <input
-              type="text"
-              name="keywords"
-              class="form-control"
-              placeholder="輸入餐廳、分類"
-              aria-label="Restaurant Name..."
-              aria-describedby="search-button"
-              value="{{keywords}}"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-major" type="submit" id="search-button"><i
-                  class="fas fa-search"
-                ></i></button>
-            </div>
+  <div class="row">
+    <div class="col-auto mr-auto">
+      <form action="/search">
+        <div class="input-group mb-3">
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary"
+              type="submit"
+              id="search-button"
+            ><i class="fas fa-search"></i></button>
           </div>
-        </form>
-      </div>
-    </div>
-
-    <!--  Dropdown button  -->
-    <div class="col ">
-      <div class="mb-1">
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Dropdown button
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+          <input
+            type="text"
+            name="keywords"
+            class="form-control"
+            placeholder="輸入餐廳、分類"
+            aria-label="Restaurant Name..."
+            aria-describedby="search-button"
+            value="{{keywords}}"
+          />
         </div>
-      </div>
+      </form>
     </div>
-
+    <!--  Dropdown   -->
+    <div class="col-auto">
+      <select name="sort" class="form-control" id="sort">
+        <option value="1" selected>A > Z</option>
+        <option value="2">Z > A</option>
+        <option value="3">類別</option>
+        <option value="4">地區</option>
+      </select>
+    </div>
   </div>
 </div>
 

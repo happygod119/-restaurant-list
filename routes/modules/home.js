@@ -11,9 +11,8 @@ router.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//search bar
+//search bar & Dropdown
 router.get("/search", (req, res) => {
-
   const keywords = req.query.keywords;
   const keyword = req.query.keywords.trim().toLowerCase();
 
@@ -29,5 +28,7 @@ router.get("/search", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+
 
 module.exports = router;
