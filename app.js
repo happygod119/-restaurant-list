@@ -10,7 +10,7 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 
 //- 載入 method-override
-const methodOverride = require('method-override')
+const methodOverride = require("method-override");
 
 //- 載入 mongoose
 const mongoose = require("mongoose");
@@ -29,7 +29,9 @@ db.once("open", () => {
 
 //- 載入 Restaurant model
 const Restaurant = require("./models/restaurant");
-const restaurant = require("./models/restaurant");
+
+//- 引用路由器
+const routes = require("./routes");
 
 //設定使用handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -42,94 +44,10 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //- 設定每一筆請求都會透過 methodOverride 進行前置處理
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"));
 
-//- 瀏覽首頁
-app.get("/", (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then((restaurant) => res.render("index", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-//- 新增資料 new頁面
-app.get("/restaurants/new", (req, res) => {
-  res.render("new");
-});
-//- 新增資料  Create 動作
-app.post("/restaurants", (req, res) => {
-  return Restaurant.create(req.body)
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
-});
-
-//- 瀏覽詳細資料
-app.get("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render("show", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-//- 修改資料 edit頁面
-app.get("/restaurants/:id/edit", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render("edit", { restaurant }))
-    .catch((error) => console.log(error));
-});
-//- 修改資料 Update 動作
-app.put("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .then((restaurant) => {
-      (restaurant.name = req.body.name),
-        (restaurant.name_en = req.body.name_en),
-        (restaurant.category = req.body.category),
-        (restaurant.image = req.body.image),
-        (restaurant.location = req.body.location),
-        (restaurant.phone = req.body.phone),
-        (restaurant.google_map = req.body.google_map),
-        (restaurant.rating = req.body.rating),
-        (restaurant.description = req.body.description);
-      return restaurant.save();
-    })
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((error) => console.log(error));
-});
-
-//- 刪除資料
-app.delete("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .then((restaurant) => restaurant.remove())
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
-});
-
-//search bar
-app.get("/search", (req, res) => {
-  if (!req.query.keywords) {
-    res.redirect("/");
-  }
-
-  const keywords = req.query.keywords;
-  const keyword = req.query.keywords.trim().toLowerCase();
-
-  Restaurant.find({})
-    .lean()
-    .then((restaurant) => {
-      const filterRestaurantsData = restaurant.filter(
-        (data) =>
-          data.name.toLowerCase().includes(keyword) ||
-          data.category.includes(keyword)
-      );
-      res.render("index", { restaurant: filterRestaurantsData, keywords });
-    })
-    .catch((err) => console.log(err));
-});
+//- 將 request 導入路由器
+app.use(routes);
 
 // 設定port
 app.listen(port, () => {
