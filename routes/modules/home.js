@@ -11,11 +11,10 @@ router.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//search bar & Dropdown
+//search bar
 router.get("/search", (req, res) => {
   const keywords = req.query.keywords;
   const keyword = req.query.keywords.trim().toLowerCase();
-
   Restaurant.find({})
     .lean()
     .then((restaurant) => {
@@ -29,6 +28,26 @@ router.get("/search", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// Dropdown
+router.get("/sort", (req, res) => {
+  const sort = req.query.sort;
+  let sortSelect = {};
 
-
+  if (Number(sort) === 1) {
+    sortSelect = { name_en: "asc" };
+  } else if (Number(sort) === 2) {
+    sortSelect = { name_en: "desc" };
+  } else if (Number(sort) === 3) {
+    sortSelect = { category: "asc" };
+  } else if (Number(sort) === 4) {
+    sortSelect = { location: "asc" };
+  } else {
+    sortSelect = { _id: "asc" };
+  }
+  Restaurant.find()
+    .lean()
+    .sort(sortSelect)
+    .then((restaurant) => res.render("index", { restaurant, sort }))
+    .catch((error) => console.log(error));
+});
 module.exports = router;

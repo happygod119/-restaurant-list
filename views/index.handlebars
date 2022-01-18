@@ -25,12 +25,15 @@
     </div>
     <!--  Dropdown   -->
     <div class="col-auto">
-      <select name="sort" class="form-control" id="sort">
-        <option value="1" selected>A > Z</option>
-        <option value="2">Z > A</option>
-        <option value="3">類別</option>
-        <option value="4">地區</option>
-      </select>
+      <form action="/sort">
+        <select name="sort" onchange="this.form.submit();">
+          <option value="0">Sort</option>
+          <option value="1" {{selected sort "1"}}>A->Z</option>
+          <option value="2" {{selected sort "2"}}>Z->A</option>
+          <option value="3" {{selected sort "3"}}>類別</option>
+          <option value="4" {{selected sort "4"}}>地區</option>
+        </select>
+      </form>
     </div>
   </div>
 </div>
@@ -75,10 +78,8 @@
                 method="POST"
                 style="display: inline;"
               >
-                <button
-                  type="submit"
-                  class="btn btn-danger"
-                >刪除</button></form>
+                <button type="submit" class="btn btn-danger">刪除</button>
+              </form>
             </div>
           </div>
         </div>
