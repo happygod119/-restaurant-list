@@ -3,11 +3,11 @@
  */
 
 (function (global, factory) {
-  typeof exports === "object" && typeof module !== "undefined"
-    ? factory(exports)
-    : typeof define === "function" && define.amd
-    ? define(["exports"], factory)
-    : ((global =
+  typeof exports === "object" && typeof module !== "undefined" ?
+    factory(exports) :
+    typeof define === "function" && define.amd ?
+    define(["exports"], factory) :
+    ((global =
         typeof globalThis !== "undefined" ? globalThis : global || self),
       factory((global.Popper = {})));
 })(this, function (exports) {
@@ -92,9 +92,10 @@
   function getDocumentElement(element) {
     // $FlowFixMe[incompatible-return]: assume body is always available
     return (
-      (isElement(element)
-        ? element.ownerDocument // $FlowFixMe[prop-missing]
-        : element.document) || window.document
+      (isElement(element) ?
+        element.ownerDocument // $FlowFixMe[prop-missing]
+        :
+        element.document) || window.document
     ).documentElement;
   }
 
@@ -242,20 +243,21 @@
     var scrollParent = getScrollParent(element);
     var isBody =
       scrollParent ===
-      ((_element$ownerDocumen = element.ownerDocument) == null
-        ? void 0
-        : _element$ownerDocumen.body);
+      ((_element$ownerDocumen = element.ownerDocument) == null ?
+        void 0 :
+        _element$ownerDocumen.body);
     var win = getWindow(scrollParent);
-    var target = isBody
-      ? [win].concat(
-          win.visualViewport || [],
-          isScrollParent(scrollParent) ? scrollParent : []
-        )
-      : scrollParent;
+    var target = isBody ?
+      [win].concat(
+        win.visualViewport || [],
+        isScrollParent(scrollParent) ? scrollParent : []
+      ) :
+      scrollParent;
     var updatedList = list.concat(target);
-    return isBody
-      ? updatedList // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
-      : updatedList.concat(listScrollParents(getParentNode(target)));
+    return isBody ?
+      updatedList // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+      :
+      updatedList.concat(listScrollParents(getParentNode(target)));
   }
 
   function isTableElement(element) {
@@ -279,8 +281,7 @@
     var currentNode = getParentNode(element);
 
     while (
-      isHTMLElement(currentNode) &&
-      ["html", "body"].indexOf(getNodeName(currentNode)) < 0
+      isHTMLElement(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0
     ) {
       var css = getComputedStyle(currentNode); // This is non-exhaustive but covers the most common CSS properties that
       // create a containing block.
@@ -289,8 +290,7 @@
       if (
         css.transform !== "none" ||
         css.perspective !== "none" ||
-        css.contain === "paint" ||
-        ["transform", "perspective"].indexOf(css.willChange) !== -1 ||
+        css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 ||
         (isFirefox && css.willChange === "filter") ||
         (isFirefox && css.filter && css.filter !== "none")
       ) {
@@ -341,12 +341,12 @@
   var popper = "popper";
   var reference = "reference";
   var variationPlacements = /*#__PURE__*/ basePlacements.reduce(function (
-    acc,
-    placement
-  ) {
-    return acc.concat([placement + "-" + start, placement + "-" + end]);
-  },
-  []);
+      acc,
+      placement
+    ) {
+      return acc.concat([placement + "-" + start, placement + "-" + end]);
+    },
+    []);
   var placements = /*#__PURE__*/ []
     .concat(basePlacements, [auto])
     .reduce(function (acc, placement) {
@@ -448,9 +448,7 @@
     for (
       var _len = arguments.length,
         args = new Array(_len > 1 ? _len - 1 : 0),
-        _key = 1;
-      _key < _len;
-      _key++
+        _key = 1; _key < _len; _key++
     ) {
       args[_key - 1] = arguments[_key];
     }
@@ -473,6 +471,7 @@
     "requires",
     "options",
   ];
+
   function validateModifiers(modifiers) {
     modifiers.forEach(function (modifier) {
       Object.keys(modifier).forEach(function (key) {
@@ -505,88 +504,88 @@
               );
             }
 
-          case "phase":
-            if (modifierPhases.indexOf(modifier.phase) < 0) {
+            case "phase":
+              if (modifierPhases.indexOf(modifier.phase) < 0) {
+                console.error(
+                  format(
+                    INVALID_MODIFIER_ERROR,
+                    modifier.name,
+                    '"phase"',
+                    "either " + modifierPhases.join(", "),
+                    '"' + String(modifier.phase) + '"'
+                  )
+                );
+              }
+
+              break;
+
+            case "fn":
+              if (typeof modifier.fn !== "function") {
+                console.error(
+                  format(
+                    INVALID_MODIFIER_ERROR,
+                    modifier.name,
+                    '"fn"',
+                    '"function"',
+                    '"' + String(modifier.fn) + '"'
+                  )
+                );
+              }
+
+              break;
+
+            case "effect":
+              if (typeof modifier.effect !== "function") {
+                console.error(
+                  format(
+                    INVALID_MODIFIER_ERROR,
+                    modifier.name,
+                    '"effect"',
+                    '"function"',
+                    '"' + String(modifier.fn) + '"'
+                  )
+                );
+              }
+
+              break;
+
+            case "requires":
+              if (!Array.isArray(modifier.requires)) {
+                console.error(
+                  format(
+                    INVALID_MODIFIER_ERROR,
+                    modifier.name,
+                    '"requires"',
+                    '"array"',
+                    '"' + String(modifier.requires) + '"'
+                  )
+                );
+              }
+
+              break;
+
+            case "requiresIfExists":
+              if (!Array.isArray(modifier.requiresIfExists)) {
+                console.error(
+                  format(
+                    INVALID_MODIFIER_ERROR,
+                    modifier.name,
+                    '"requiresIfExists"',
+                    '"array"',
+                    '"' + String(modifier.requiresIfExists) + '"'
+                  )
+                );
+              }
+
+              break;
+
+            case "options":
+            case "data":
+              break;
+
+            default:
               console.error(
-                format(
-                  INVALID_MODIFIER_ERROR,
-                  modifier.name,
-                  '"phase"',
-                  "either " + modifierPhases.join(", "),
-                  '"' + String(modifier.phase) + '"'
-                )
-              );
-            }
-
-            break;
-
-          case "fn":
-            if (typeof modifier.fn !== "function") {
-              console.error(
-                format(
-                  INVALID_MODIFIER_ERROR,
-                  modifier.name,
-                  '"fn"',
-                  '"function"',
-                  '"' + String(modifier.fn) + '"'
-                )
-              );
-            }
-
-            break;
-
-          case "effect":
-            if (typeof modifier.effect !== "function") {
-              console.error(
-                format(
-                  INVALID_MODIFIER_ERROR,
-                  modifier.name,
-                  '"effect"',
-                  '"function"',
-                  '"' + String(modifier.fn) + '"'
-                )
-              );
-            }
-
-            break;
-
-          case "requires":
-            if (!Array.isArray(modifier.requires)) {
-              console.error(
-                format(
-                  INVALID_MODIFIER_ERROR,
-                  modifier.name,
-                  '"requires"',
-                  '"array"',
-                  '"' + String(modifier.requires) + '"'
-                )
-              );
-            }
-
-            break;
-
-          case "requiresIfExists":
-            if (!Array.isArray(modifier.requiresIfExists)) {
-              console.error(
-                format(
-                  INVALID_MODIFIER_ERROR,
-                  modifier.name,
-                  '"requiresIfExists"',
-                  '"array"',
-                  '"' + String(modifier.requiresIfExists) + '"'
-                )
-              );
-            }
-
-            break;
-
-          case "options":
-          case "data":
-            break;
-
-          default:
-            console.error(
-              'PopperJS: an invalid property has been provided to the "' +
+                'PopperJS: an invalid property has been provided to the "' +
                 modifier.name +
                 '" modifier, valid properties are ' +
                 VALID_PROPERTIES.map(function (s) {
@@ -595,7 +594,7 @@
                 '; but "' +
                 key +
                 '" was provided.'
-            );
+              );
         }
 
         modifier.requires &&
@@ -638,12 +637,12 @@
   function mergeByName(modifiers) {
     var merged = modifiers.reduce(function (merged, current) {
       var existing = merged[current.name];
-      merged[current.name] = existing
-        ? Object.assign({}, existing, current, {
-            options: Object.assign({}, existing.options, current.options),
-            data: Object.assign({}, existing.data, current.data),
-          })
-        : current;
+      merged[current.name] = existing ?
+        Object.assign({}, existing, current, {
+          options: Object.assign({}, existing.options, current.options),
+          data: Object.assign({}, existing.data, current.data),
+        }) :
+        current;
       return merged;
     }, {}); // IE11 does not support Object.values
 
@@ -702,9 +701,9 @@
     var html = getDocumentElement(element);
     var winScroll = getWindowScroll(element);
     var body =
-      (_element$ownerDocumen = element.ownerDocument) == null
-        ? void 0
-        : _element$ownerDocumen.body;
+      (_element$ownerDocumen = element.ownerDocument) == null ?
+      void 0 :
+      _element$ownerDocumen.body;
     var width = max(
       html.scrollWidth,
       html.clientWidth,
@@ -776,23 +775,22 @@
   }
 
   function getClientRectFromMixedType(element, clippingParent) {
-    return clippingParent === viewport
-      ? rectToClientRect(getViewportRect(element))
-      : isHTMLElement(clippingParent)
-      ? getInnerBoundingClientRect(clippingParent)
-      : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+    return clippingParent === viewport ?
+      rectToClientRect(getViewportRect(element)) :
+      isHTMLElement(clippingParent) ?
+      getInnerBoundingClientRect(clippingParent) :
+      rectToClientRect(getDocumentRect(getDocumentElement(element)));
   } // A "clipping parent" is an overflowable container with the characteristic of
   // clipping (or hiding) overflowing elements with a position different from
   // `initial`
 
   function getClippingParents(element) {
     var clippingParents = listScrollParents(getParentNode(element));
-    var canEscapeClipping =
-      ["absolute", "fixed"].indexOf(getComputedStyle(element).position) >= 0;
+    var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle(element).position) >= 0;
     var clipperElement =
-      canEscapeClipping && isHTMLElement(element)
-        ? getOffsetParent(element)
-        : element;
+      canEscapeClipping && isHTMLElement(element) ?
+      getOffsetParent(element) :
+      element;
 
     if (!isElement(clipperElement)) {
       return [];
@@ -810,23 +808,23 @@
 
   function getClippingRect(element, boundary, rootBoundary) {
     var mainClippingParents =
-      boundary === "clippingParents"
-        ? getClippingParents(element)
-        : [].concat(boundary);
+      boundary === "clippingParents" ?
+      getClippingParents(element) :
+      [].concat(boundary);
     var clippingParents = [].concat(mainClippingParents, [rootBoundary]);
     var firstClippingParent = clippingParents[0];
     var clippingRect = clippingParents.reduce(function (
-      accRect,
-      clippingParent
-    ) {
-      var rect = getClientRectFromMixedType(element, clippingParent);
-      accRect.top = max(rect.top, accRect.top);
-      accRect.right = min(rect.right, accRect.right);
-      accRect.bottom = min(rect.bottom, accRect.bottom);
-      accRect.left = max(rect.left, accRect.left);
-      return accRect;
-    },
-    getClientRectFromMixedType(element, firstClippingParent));
+        accRect,
+        clippingParent
+      ) {
+        var rect = getClientRectFromMixedType(element, clippingParent);
+        accRect.top = max(rect.top, accRect.top);
+        accRect.right = min(rect.right, accRect.right);
+        accRect.bottom = min(rect.bottom, accRect.bottom);
+        accRect.left = max(rect.left, accRect.left);
+        return accRect;
+      },
+      getClientRectFromMixedType(element, firstClippingParent));
     clippingRect.width = clippingRect.right - clippingRect.left;
     clippingRect.height = clippingRect.bottom - clippingRect.top;
     clippingRect.x = clippingRect.left;
@@ -888,9 +886,9 @@
         };
     }
 
-    var mainAxis = basePlacement
-      ? getMainAxisFromPlacement(basePlacement)
-      : null;
+    var mainAxis = basePlacement ?
+      getMainAxisFromPlacement(basePlacement) :
+      null;
 
     if (mainAxis != null) {
       var len = mainAxis === "y" ? "height" : "width";
@@ -939,34 +937,34 @@
     var _options = options,
       _options$placement = _options.placement,
       placement =
-        _options$placement === void 0 ? state.placement : _options$placement,
+      _options$placement === void 0 ? state.placement : _options$placement,
       _options$boundary = _options.boundary,
       boundary =
-        _options$boundary === void 0 ? clippingParents : _options$boundary,
+      _options$boundary === void 0 ? clippingParents : _options$boundary,
       _options$rootBoundary = _options.rootBoundary,
       rootBoundary =
-        _options$rootBoundary === void 0 ? viewport : _options$rootBoundary,
+      _options$rootBoundary === void 0 ? viewport : _options$rootBoundary,
       _options$elementConte = _options.elementContext,
       elementContext =
-        _options$elementConte === void 0 ? popper : _options$elementConte,
+      _options$elementConte === void 0 ? popper : _options$elementConte,
       _options$altBoundary = _options.altBoundary,
       altBoundary =
-        _options$altBoundary === void 0 ? false : _options$altBoundary,
+      _options$altBoundary === void 0 ? false : _options$altBoundary,
       _options$padding = _options.padding,
       padding = _options$padding === void 0 ? 0 : _options$padding;
     var paddingObject = mergePaddingObject(
-      typeof padding !== "number"
-        ? padding
-        : expandToHashMap(padding, basePlacements)
+      typeof padding !== "number" ?
+      padding :
+      expandToHashMap(padding, basePlacements)
     );
     var altContext = elementContext === popper ? reference : popper;
     var referenceElement = state.elements.reference;
     var popperRect = state.rects.popper;
     var element = state.elements[altBoundary ? altContext : elementContext];
     var clippingClientRect = getClippingRect(
-      isElement(element)
-        ? element
-        : element.contextElement || getDocumentElement(state.elements.popper),
+      isElement(element) ?
+      element :
+      element.contextElement || getDocumentElement(state.elements.popper),
       boundary,
       rootBoundary
     );
@@ -986,14 +984,11 @@
 
     var overflowOffsets = {
       top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
-      bottom:
-        elementClientRect.bottom -
+      bottom: elementClientRect.bottom -
         clippingClientRect.bottom +
         paddingObject.bottom,
-      left:
-        clippingClientRect.left - elementClientRect.left + paddingObject.left,
-      right:
-        elementClientRect.right -
+      left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+      right: elementClientRect.right -
         clippingClientRect.right +
         paddingObject.right,
     };
@@ -1023,9 +1018,7 @@
 
   function areValidElements() {
     for (
-      var _len = arguments.length, args = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
+      var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++
     ) {
       args[_key] = arguments[_key];
     }
@@ -1043,12 +1036,12 @@
     var _generatorOptions = generatorOptions,
       _generatorOptions$def = _generatorOptions.defaultModifiers,
       defaultModifiers =
-        _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
+      _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
       _generatorOptions$def2 = _generatorOptions.defaultOptions,
       defaultOptions =
-        _generatorOptions$def2 === void 0
-          ? DEFAULT_OPTIONS
-          : _generatorOptions$def2;
+      _generatorOptions$def2 === void 0 ?
+      DEFAULT_OPTIONS :
+      _generatorOptions$def2;
     return function createPopper(reference, popper, options) {
       if (options === void 0) {
         options = defaultOptions;
@@ -1072,18 +1065,17 @@
         state: state,
         setOptions: function setOptions(options) {
           cleanupModifierEffects();
-          state.options = Object.assign(
-            {},
+          state.options = Object.assign({},
             defaultOptions,
             state.options,
             options
           );
           state.scrollParents = {
-            reference: isElement(reference)
-              ? listScrollParents(reference)
-              : reference.contextElement
-              ? listScrollParents(reference.contextElement)
-              : [],
+            reference: isElement(reference) ?
+              listScrollParents(reference) :
+              reference.contextElement ?
+              listScrollParents(reference.contextElement) :
+              [],
             popper: listScrollParents(popper),
           }; // Orders the modifiers based on their dependencies and `phase`
           // properties
@@ -1195,8 +1187,7 @@
           // To ensure persistent data, use `${name}#persistent`
 
           state.orderedModifiers.forEach(function (modifier) {
-            return (state.modifiersData[modifier.name] = Object.assign(
-              {},
+            return (state.modifiersData[modifier.name] = Object.assign({},
               modifier.data
             ));
           });
@@ -1222,7 +1213,7 @@
               fn = _state$orderedModifie.fn,
               _state$orderedModifie2 = _state$orderedModifie.options,
               _options =
-                _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
+              _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
               name = _state$orderedModifie.name;
 
             if (typeof fn === "function") {
@@ -1407,11 +1398,11 @@
       roundOffsets = _ref2.roundOffsets;
 
     var _ref3 =
-        roundOffsets === true
-          ? roundOffsetsByDPR(offsets)
-          : typeof roundOffsets === "function"
-          ? roundOffsets(offsets)
-          : offsets,
+      roundOffsets === true ?
+      roundOffsetsByDPR(offsets) :
+      typeof roundOffsets === "function" ?
+      roundOffsets(offsets) :
+      offsets,
       _ref3$x = _ref3.x,
       x = _ref3$x === void 0 ? 0 : _ref3$x,
       _ref3$y = _ref3.y,
@@ -1454,8 +1445,7 @@
       }
     }
 
-    var commonStyles = Object.assign(
-      {
+    var commonStyles = Object.assign({
         position: position,
       },
       adaptive && unsetSides
@@ -1464,28 +1454,26 @@
     if (gpuAcceleration) {
       var _Object$assign;
 
-      return Object.assign(
-        {},
+      return Object.assign({},
         commonStyles,
         ((_Object$assign = {}),
-        (_Object$assign[sideY] = hasY ? "0" : ""),
-        (_Object$assign[sideX] = hasX ? "0" : ""),
-        (_Object$assign.transform =
-          (win.devicePixelRatio || 1) < 2
-            ? "translate(" + x + "px, " + y + "px)"
-            : "translate3d(" + x + "px, " + y + "px, 0)"),
-        _Object$assign)
+          (_Object$assign[sideY] = hasY ? "0" : ""),
+          (_Object$assign[sideX] = hasX ? "0" : ""),
+          (_Object$assign.transform =
+            (win.devicePixelRatio || 1) < 2 ?
+            "translate(" + x + "px, " + y + "px)" :
+            "translate3d(" + x + "px, " + y + "px, 0)"),
+          _Object$assign)
       );
     }
 
-    return Object.assign(
-      {},
+    return Object.assign({},
       commonStyles,
       ((_Object$assign2 = {}),
-      (_Object$assign2[sideY] = hasY ? y + "px" : ""),
-      (_Object$assign2[sideX] = hasX ? x + "px" : ""),
-      (_Object$assign2.transform = ""),
-      _Object$assign2)
+        (_Object$assign2[sideY] = hasY ? y + "px" : ""),
+        (_Object$assign2[sideX] = hasX ? x + "px" : ""),
+        (_Object$assign2.transform = ""),
+        _Object$assign2)
     );
   }
 
@@ -1494,20 +1482,19 @@
       options = _ref4.options;
     var _options$gpuAccelerat = options.gpuAcceleration,
       gpuAcceleration =
-        _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
+      _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
       _options$adaptive = options.adaptive,
       adaptive = _options$adaptive === void 0 ? true : _options$adaptive,
       _options$roundOffsets = options.roundOffsets,
       roundOffsets =
-        _options$roundOffsets === void 0 ? true : _options$roundOffsets;
+      _options$roundOffsets === void 0 ? true : _options$roundOffsets;
 
     {
       var transitionProperty =
         getComputedStyle(state.elements.popper).transitionProperty || "";
 
       if (
-        adaptive &&
-        ["transform", "top", "right", "bottom", "left"].some(function (
+        adaptive && ["transform", "top", "right", "bottom", "left"].some(function (
           property
         ) {
           return transitionProperty.indexOf(property) >= 0;
@@ -1538,8 +1525,7 @@
     };
 
     if (state.modifiersData.popperOffsets != null) {
-      state.styles.popper = Object.assign(
-        {},
+      state.styles.popper = Object.assign({},
         state.styles.popper,
         mapToStyles(
           Object.assign({}, commonStyles, {
@@ -1553,8 +1539,7 @@
     }
 
     if (state.modifiersData.arrow != null) {
-      state.styles.arrow = Object.assign(
-        {},
+      state.styles.arrow = Object.assign({},
         state.styles.arrow,
         mapToStyles(
           Object.assign({}, commonStyles, {
@@ -1634,9 +1619,9 @@
         var element = state.elements[name];
         var attributes = state.attributes[name] || {};
         var styleProperties = Object.keys(
-          state.styles.hasOwnProperty(name)
-            ? state.styles[name]
-            : initialStyles[name]
+          state.styles.hasOwnProperty(name) ?
+          state.styles[name] :
+          initialStyles[name]
         ); // Set all values to an empty string to unset them
 
         var style = styleProperties.reduce(function (style, property) {
@@ -1670,27 +1655,27 @@
     var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
 
     var _ref =
-        typeof offset === "function"
-          ? offset(
-              Object.assign({}, rects, {
-                placement: placement,
-              })
-            )
-          : offset,
+      typeof offset === "function" ?
+      offset(
+        Object.assign({}, rects, {
+          placement: placement,
+        })
+      ) :
+      offset,
       skidding = _ref[0],
       distance = _ref[1];
 
     skidding = skidding || 0;
     distance = (distance || 0) * invertDistance;
-    return [left, right].indexOf(basePlacement) >= 0
-      ? {
-          x: distance,
-          y: skidding,
-        }
-      : {
-          x: skidding,
-          y: distance,
-        };
+    return [left, right].indexOf(basePlacement) >= 0 ?
+      {
+        x: distance,
+        y: skidding,
+      } :
+      {
+        x: skidding,
+        y: distance,
+      };
   }
 
   function offset(_ref2) {
@@ -1729,6 +1714,7 @@
     bottom: "top",
     top: "bottom",
   };
+
   function getOppositePlacement(placement) {
     return placement.replace(/left|right|bottom|top/g, function (matched) {
       return hash$1[matched];
@@ -1739,6 +1725,7 @@
     start: "end",
     end: "start",
   };
+
   function getOppositeVariationPlacement(placement) {
     return placement.replace(/start|end/g, function (matched) {
       return hash[matched];
@@ -1758,15 +1745,15 @@
       flipVariations = _options.flipVariations,
       _options$allowedAutoP = _options.allowedAutoPlacements,
       allowedAutoPlacements =
-        _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
+      _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
     var variation = getVariation(placement);
-    var placements$1 = variation
-      ? flipVariations
-        ? variationPlacements
-        : variationPlacements.filter(function (placement) {
-            return getVariation(placement) === variation;
-          })
-      : basePlacements;
+    var placements$1 = variation ?
+      flipVariations ?
+      variationPlacements :
+      variationPlacements.filter(function (placement) {
+        return getVariation(placement) === variation;
+      }) :
+      basePlacements;
     var allowedPlacements = placements$1.filter(function (placement) {
       return allowedAutoPlacements.indexOf(placement) >= 0;
     });
@@ -1834,30 +1821,30 @@
       altBoundary = options.altBoundary,
       _options$flipVariatio = options.flipVariations,
       flipVariations =
-        _options$flipVariatio === void 0 ? true : _options$flipVariatio,
+      _options$flipVariatio === void 0 ? true : _options$flipVariatio,
       allowedAutoPlacements = options.allowedAutoPlacements;
     var preferredPlacement = state.options.placement;
     var basePlacement = getBasePlacement(preferredPlacement);
     var isBasePlacement = basePlacement === preferredPlacement;
     var fallbackPlacements =
       specifiedFallbackPlacements ||
-      (isBasePlacement || !flipVariations
-        ? [getOppositePlacement(preferredPlacement)]
-        : getExpandedFallbackPlacements(preferredPlacement));
+      (isBasePlacement || !flipVariations ?
+        [getOppositePlacement(preferredPlacement)] :
+        getExpandedFallbackPlacements(preferredPlacement));
     var placements = [preferredPlacement]
       .concat(fallbackPlacements)
       .reduce(function (acc, placement) {
         return acc.concat(
-          getBasePlacement(placement) === auto
-            ? computeAutoPlacement(state, {
-                placement: placement,
-                boundary: boundary,
-                rootBoundary: rootBoundary,
-                padding: padding,
-                flipVariations: flipVariations,
-                allowedAutoPlacements: allowedAutoPlacements,
-              })
-            : placement
+          getBasePlacement(placement) === auto ?
+          computeAutoPlacement(state, {
+            placement: placement,
+            boundary: boundary,
+            rootBoundary: rootBoundary,
+            padding: padding,
+            flipVariations: flipVariations,
+            allowedAutoPlacements: allowedAutoPlacements,
+          }) :
+          placement
         );
       }, []);
     var referenceRect = state.rects.reference;
@@ -1881,13 +1868,13 @@
         altBoundary: altBoundary,
         padding: padding,
       });
-      var mainVariationSide = isVertical
-        ? isStartVariation
-          ? right
-          : left
-        : isStartVariation
-        ? bottom
-        : top;
+      var mainVariationSide = isVertical ?
+        isStartVariation ?
+        right :
+        left :
+        isStartVariation ?
+        bottom :
+        top;
 
       if (referenceRect[len] > popperRect[len]) {
         mainVariationSide = getOppositePlacement(mainVariationSide);
@@ -1990,7 +1977,7 @@
       tether = _options$tether === void 0 ? true : _options$tether,
       _options$tetherOffset = options.tetherOffset,
       tetherOffset =
-        _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
+      _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
     var overflow = detectOverflow(state, {
       boundary: boundary,
       rootBoundary: rootBoundary,
@@ -2006,13 +1993,13 @@
     var referenceRect = state.rects.reference;
     var popperRect = state.rects.popper;
     var tetherOffsetValue =
-      typeof tetherOffset === "function"
-        ? tetherOffset(
-            Object.assign({}, state.rects, {
-              placement: state.placement,
-            })
-          )
-        : tetherOffset;
+      typeof tetherOffset === "function" ?
+      tetherOffset(
+        Object.assign({}, state.rects, {
+          placement: state.placement,
+        })
+      ) :
+      tetherOffset;
     var data = {
       x: 0,
       y: 0,
@@ -2036,15 +2023,15 @@
 
       var arrowElement = state.elements.arrow;
       var arrowRect =
-        tether && arrowElement
-          ? getLayoutRect(arrowElement)
-          : {
-              width: 0,
-              height: 0,
-            };
-      var arrowPaddingObject = state.modifiersData["arrow#persistent"]
-        ? state.modifiersData["arrow#persistent"].padding
-        : getFreshSideObject();
+        tether && arrowElement ?
+        getLayoutRect(arrowElement) :
+        {
+          width: 0,
+          height: 0,
+        };
+      var arrowPaddingObject = state.modifiersData["arrow#persistent"] ?
+        state.modifiersData["arrow#persistent"].padding :
+        getFreshSideObject();
       var arrowPaddingMin = arrowPaddingObject[mainSide];
       var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
       // to include its full size in the calculation. If the reference is small
@@ -2053,30 +2040,30 @@
       // width or height)
 
       var arrowLen = within(0, referenceRect[len], arrowRect[len]);
-      var minOffset = isBasePlacement
-        ? referenceRect[len] / 2 -
-          additive -
-          arrowLen -
-          arrowPaddingMin -
-          tetherOffsetValue
-        : minLen - arrowLen - arrowPaddingMin - tetherOffsetValue;
-      var maxOffset = isBasePlacement
-        ? -referenceRect[len] / 2 +
-          additive +
-          arrowLen +
-          arrowPaddingMax +
-          tetherOffsetValue
-        : maxLen + arrowLen + arrowPaddingMax + tetherOffsetValue;
+      var minOffset = isBasePlacement ?
+        referenceRect[len] / 2 -
+        additive -
+        arrowLen -
+        arrowPaddingMin -
+        tetherOffsetValue :
+        minLen - arrowLen - arrowPaddingMin - tetherOffsetValue;
+      var maxOffset = isBasePlacement ?
+        -referenceRect[len] / 2 +
+        additive +
+        arrowLen +
+        arrowPaddingMax +
+        tetherOffsetValue :
+        maxLen + arrowLen + arrowPaddingMax + tetherOffsetValue;
       var arrowOffsetParent =
         state.elements.arrow && getOffsetParent(state.elements.arrow);
-      var clientOffset = arrowOffsetParent
-        ? mainAxis === "y"
-          ? arrowOffsetParent.clientTop || 0
-          : arrowOffsetParent.clientLeft || 0
-        : 0;
-      var offsetModifierValue = state.modifiersData.offset
-        ? state.modifiersData.offset[state.placement][mainAxis]
-        : 0;
+      var clientOffset = arrowOffsetParent ?
+        mainAxis === "y" ?
+        arrowOffsetParent.clientTop || 0 :
+        arrowOffsetParent.clientLeft || 0 :
+        0;
+      var offsetModifierValue = state.modifiersData.offset ?
+        state.modifiersData.offset[state.placement][mainAxis] :
+        0;
       var tetherMin =
         popperOffsets[mainAxis] +
         minOffset -
@@ -2129,17 +2116,17 @@
 
   var toPaddingObject = function toPaddingObject(padding, state) {
     padding =
-      typeof padding === "function"
-        ? padding(
-            Object.assign({}, state.rects, {
-              placement: state.placement,
-            })
-          )
-        : padding;
+      typeof padding === "function" ?
+      padding(
+        Object.assign({}, state.rects, {
+          placement: state.placement,
+        })
+      ) :
+      padding;
     return mergePaddingObject(
-      typeof padding !== "number"
-        ? padding
-        : expandToHashMap(padding, basePlacements)
+      typeof padding !== "number" ?
+      padding :
+      expandToHashMap(padding, basePlacements)
     );
   };
 
@@ -2171,11 +2158,11 @@
       state.rects.popper[len];
     var startDiff = popperOffsets[axis] - state.rects.reference[axis];
     var arrowOffsetParent = getOffsetParent(arrowElement);
-    var clientSize = arrowOffsetParent
-      ? axis === "y"
-        ? arrowOffsetParent.clientHeight || 0
-        : arrowOffsetParent.clientWidth || 0
-      : 0;
+    var clientSize = arrowOffsetParent ?
+      axis === "y" ?
+      arrowOffsetParent.clientHeight || 0 :
+      arrowOffsetParent.clientWidth || 0 :
+      0;
     var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
     // outside of the popper bounds
 
@@ -2187,9 +2174,9 @@
     var axisProp = axis;
     state.modifiersData[name] =
       ((_state$modifiersData$ = {}),
-      (_state$modifiersData$[axisProp] = offset),
-      (_state$modifiersData$.centerOffset = offset - center),
-      _state$modifiersData$);
+        (_state$modifiersData$[axisProp] = offset),
+        (_state$modifiersData$.centerOffset = offset - center),
+        _state$modifiersData$);
   }
 
   function effect(_ref2) {
@@ -2197,7 +2184,7 @@
       options = _ref2.options;
     var _options$element = options.element,
       arrowElement =
-        _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
+      _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
 
     if (arrowElement == null) {
       return;
@@ -2354,6 +2341,8 @@
   exports.popperOffsets = popperOffsets$1;
   exports.preventOverflow = preventOverflow$1;
 
-  Object.defineProperty(exports, "__esModule", { value: true });
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });
 //# sourceMappingURL=popper.js.map

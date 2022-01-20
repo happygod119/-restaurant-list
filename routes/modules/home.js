@@ -7,7 +7,9 @@ const Restaurant = require("../../models/restaurant");
 router.get("/", (req, res) => {
   Restaurant.find()
     .lean()
-    .then((restaurant) => res.render("index", { restaurant }))
+    .then((restaurant) => res.render("index", {
+      restaurant
+    }))
     .catch((error) => console.log(error));
 });
 
@@ -20,10 +22,13 @@ router.get("/search", (req, res) => {
     .then((restaurant) => {
       const filterRestaurantsData = restaurant.filter(
         (data) =>
-          data.name.toLowerCase().includes(keyword) ||
-          data.category.includes(keyword)
+        data.name.toLowerCase().includes(keyword) ||
+        data.category.includes(keyword)
       );
-      res.render("index", { restaurant: filterRestaurantsData, keywords });
+      res.render("index", {
+        restaurant: filterRestaurantsData,
+        keywords
+      });
     })
     .catch((err) => console.log(err));
 });
@@ -34,20 +39,33 @@ router.get("/sort", (req, res) => {
   let sortSelect = {};
 
   if (Number(sort) === 1) {
-    sortSelect = { name_en: "asc" };
+    sortSelect = {
+      name_en: "asc"
+    };
   } else if (Number(sort) === 2) {
-    sortSelect = { name_en: "desc" };
+    sortSelect = {
+      name_en: "desc"
+    };
   } else if (Number(sort) === 3) {
-    sortSelect = { category: "asc" };
+    sortSelect = {
+      category: "asc"
+    };
   } else if (Number(sort) === 4) {
-    sortSelect = { location: "asc" };
+    sortSelect = {
+      location: "asc"
+    };
   } else {
-    sortSelect = { _id: "asc" };
+    sortSelect = {
+      _id: "asc"
+    };
   }
   Restaurant.find()
     .lean()
     .sort(sortSelect)
-    .then((restaurant) => res.render("index", { restaurant, sort }))
+    .then((restaurant) => res.render("index", {
+      restaurant,
+      sort
+    }))
     .catch((error) => console.log(error));
 });
 module.exports = router;

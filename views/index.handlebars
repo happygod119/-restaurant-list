@@ -5,21 +5,11 @@
       <form action="/search">
         <div class="input-group mb-3">
           <div class="input-group-append">
-            <button
-              class="btn btn-outline-secondary"
-              type="submit"
-              id="search-button"
-            ><i class="fas fa-search"></i></button>
+            <button class="btn btn-outline-secondary" type="submit" id="search-button"><i
+                class="fas fa-search"></i></button>
           </div>
-          <input
-            type="text"
-            name="keywords"
-            class="form-control"
-            placeholder="輸入餐廳、分類"
-            aria-label="Restaurant Name..."
-            aria-describedby="search-button"
-            value="{{keywords}}"
-          />
+          <input type="text" name="keywords" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+            aria-describedby="search-button" value="{{keywords}}" />
         </div>
       </form>
     </div>
@@ -28,10 +18,10 @@
       <form action="/sort">
         <select name="sort" onchange="this.form.submit();">
           <option value="0">Sort</option>
-          <option value="1" {{selected sort "1"}}>A->Z</option>
-          <option value="2" {{selected sort "2"}}>Z->A</option>
-          <option value="3" {{selected sort "3"}}>類別</option>
-          <option value="4" {{selected sort "4"}}>地區</option>
+          <option value="1" {{selected sort "1" }}>A->Z</option>
+          <option value="2" {{selected sort "2" }}>Z->A</option>
+          <option value="3" {{selected sort "3" }}>類別</option>
+          <option value="4" {{selected sort "4" }}>地區</option>
         </select>
       </form>
     </div>
@@ -41,59 +31,45 @@
 <!-- restaurant list -->
 <div class="container mt-5">
   {{#if restaurant}}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      {{! each 迴圈 }}
-      {{#each restaurant}}
-        <div class="col">
-          <div class="card mb-3">
-            <img
-              class="card-img-top"
-              src="{{this.image}}"
-              alt="{{this.name}}"
-            />
-            <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{this.name}}</h6>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {{! each 迴圈 }}
+    {{#each restaurant}}
+    <div class="col">
+      <div class="card mb-3">
+        <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}" />
+        <div class="card-body p-3">
+          <h6 class="card-title mb-1">{{this.name}}</h6>
 
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i>
-                {{this.category}}
-              </div>
-
-              <span class="badge badge-pill badge-danger font-weight-normal">
-                {{this.rating}}
-                <i class="fas fa-star fa-xs"></i>
-              </span>
-            </div>
-            <div class="card-footer text-center">
-              <a
-                href="./restaurants/{{this._id}}/edit"
-                class="btn btn-primary"
-              >修改</a>
-              <a
-                href="./restaurants/{{this._id}}"
-                class="btn btn-secondary"
-              >介紹</a>
-              <form
-                action="./restaurants/{{this._id}}?_method=DELETE"
-                method="POST"
-                style="display: inline;"
-              >
-                <button type="submit" class="btn btn-danger">刪除</button>
-              </form>
-            </div>
+          <div class="restaurant-category mb-1">
+            <i class="fas fa-utensils pr-2"></i>
+            {{this.category}}
           </div>
+
+          <span class="badge badge-pill badge-danger font-weight-normal">
+            {{this.rating}}
+            <i class="fas fa-star fa-xs"></i>
+          </span>
         </div>
-
-      {{/each}}
-
+        <div class="card-footer text-center">
+          <a href="./restaurants/{{this._id}}/edit" class="btn btn-primary">修改</a>
+          <a href="./restaurants/{{this._id}}" class="btn btn-secondary">介紹</a>
+          <form action="./restaurants/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-danger">刪除</button>
+          </form>
+        </div>
+      </div>
     </div>
+
+    {{/each}}
+
+  </div>
 
   {{else}}
-    <!-- no result for search -->
-    <div class="alert alert-warning" role="alert">
-      關鍵字
-      <strong>{{keywords}}</strong>
-      查無相關餐廳，請重新搜尋一次。
-    </div>
+  <!-- no result for search -->
+  <div class="alert alert-warning" role="alert">
+    關鍵字
+    <strong>{{keywords}}</strong>
+    查無相關餐廳，請重新搜尋一次。
+  </div>
   {{/if}}
 </div>
