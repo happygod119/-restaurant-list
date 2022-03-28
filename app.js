@@ -14,9 +14,10 @@ require("./config/mongoose"); //- 引用mongoose;
 const routes = require("./routes"); //- 引用路由器
 
 app.engine(
-  "handlebars",
+  "hbs",
   exphbs({
     defaultLayout: "main",
+    extname: ".hbs",
     helpers: {
       selected: function (option, value) {
         if (option === value) {
@@ -25,10 +26,10 @@ app.engine(
           return "";
         }
       },
-    },
+    }, 
   })
 ); //設定使用handlebars
-app.set("view engine", "handlebars");
+app.set("view engine", "hbs");
 app.use(express.static("public")); //使用public設定
 app.use(bodyParser.urlencoded({ extended: true })); //-使用body-parser
 app.use(methodOverride("_method")); //- 設定每一筆請求都會透過 methodOverride 進行前置處理
