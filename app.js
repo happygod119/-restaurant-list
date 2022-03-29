@@ -10,6 +10,8 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 //- 載入 method-override
 const methodOverride = require("method-override");
+//* 引用 connect-flash
+const flash = require("connect-flash"); 
 
 require("./config/mongoose"); //- 引用mongoose;
 
@@ -45,9 +47,12 @@ app.use(bodyParser.urlencoded({ extended: true })); //-使用body-parser
 app.use(methodOverride("_method")); //- 設定每一筆請求都會透過 methodOverride 進行前置處理
 
 usePassport(app); //- 呼叫 Passport 函式並傳入
+app.use(flash()); // connect-flash
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
   next();
 });
 
