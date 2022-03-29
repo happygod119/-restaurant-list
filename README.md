@@ -56,7 +56,7 @@ Express is listening on http://localhost:3000
 - Express-Handlebars ^3.0.0
 - Express-session 1.17.1
 - Bootstrap 4.3.1
-- Font-awesome 5.8.1
+- Font-awesome 6.1.1
 - MongoDB
 - mongoose 6.1.6
 - bcryptjs 2.4.3
