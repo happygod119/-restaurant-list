@@ -2,6 +2,8 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+// 載入express-session
+const session = require("express-session");
 // 載入handlebars
 const exphbs = require("express-handlebars");
 //- 引用 body-parser
@@ -30,6 +32,13 @@ app.engine(
   })
 ); //設定使用handlebars
 app.set("view engine", "hbs");
+app.use(
+  session({
+    secret: "ThisIsMySecret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(express.static("public")); //使用public設定
 app.use(bodyParser.urlencoded({ extended: true })); //-使用body-parser
 app.use(methodOverride("_method")); //- 設定每一筆請求都會透過 methodOverride 進行前置處理
