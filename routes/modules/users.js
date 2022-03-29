@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/user");
-
-const passport = require('passport')//* 引用 passport
+const passport = require("passport"); //* 引用 passport
 
 router.get("/login", (req, res) => {
   res.render("login");
 });
-
 // 加入 middleware，驗證 request 登入狀態
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
@@ -17,7 +15,6 @@ router.post('/login', passport.authenticate('local', {
 router.get("/register", (req, res) => {
   res.render("register");
 });
-
 router.post("/register", (req, res) => {
   // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body;
@@ -26,7 +23,6 @@ router.post("/register", (req, res) => {
     .then((user) => {
       // 如果已經註冊：退回原本畫面
       if (user) {
-        console.log("User already exists.");
         res.render("register", {
           name,
           email,

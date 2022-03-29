@@ -5,11 +5,14 @@ const router = express.Router();
 const Restaurant = require("../../models/restaurant");
 
 router.get("/", (req, res) => {
-  Restaurant.find()
+  const userId = req.user._id;
+  Restaurant.find({ userId })
     .lean()
-    .then((restaurant) => res.render("index", {
-      restaurant
-    }))
+    .then((restaurant) =>
+      res.render("index", {
+        restaurant,
+      })
+    )
     .catch((error) => console.log(error));
 });
 
@@ -17,17 +20,18 @@ router.get("/", (req, res) => {
 router.get("/search", (req, res) => {
   const keywords = req.query.keywords;
   const keyword = req.query.keywords.trim().toLowerCase();
-  Restaurant.find({})
+    const userId = req.user._id;
+  Restaurant.find({ userId })
     .lean()
     .then((restaurant) => {
       const filterRestaurantsData = restaurant.filter(
         (data) =>
-        data.name.toLowerCase().includes(keyword) ||
-        data.category.includes(keyword)
+          data.name.toLowerCase().includes(keyword) ||
+          data.category.includes(keyword)
       );
       res.render("index", {
         restaurant: filterRestaurantsData,
-        keywords
+        keywords,
       });
     })
     .catch((err) => console.log(err));
