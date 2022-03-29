@@ -2,8 +2,7 @@
 const mongoose = require("mongoose");
 
 //- 設定連線到 mongoDB
-const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI);
 
 //- 取得資料庫連線狀態
 const db = mongoose.connection;

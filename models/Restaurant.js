@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const User = require("./user");
 
 const restaurantSchema = new Schema({
   //* 資料型別是字串 & 這是個必填欄位
-  name: { type: String, required: true },
+  name: { type: String},
   name_en: { type: String},
   category: { type: String, required: true },
   image: { type: String, required: true },
@@ -15,7 +16,7 @@ const restaurantSchema = new Schema({
   userId: {
     // 加入關聯設定
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: User,
     index: true,
     required: true,
   },

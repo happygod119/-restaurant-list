@@ -1,8 +1,10 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const User = require("../models/user");
-const bcrypt = require("bcryptjs"); //* 引用 bcrypt
 const FacebookStrategy = require("passport-facebook").Strategy; //* 引用 Facebook 登入
+const bcrypt = require("bcryptjs"); //* 引用 bcrypt
+const User = require("../models/user");
+
+
 
 module.exports = (app) => {
   // 初始化 Passport 模組

@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -7,6 +6,7 @@ const Restaurant = require("../restaurant");
 const User = require("../user");
 const restaurantList = require("../../restaurant.json").results;
 const db = require("../../config/mongoose");
+const bcrypt = require("bcryptjs");
 
 const SEED_USER = [
   {
