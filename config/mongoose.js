@@ -1,10 +1,9 @@
 //- 載入 mongoose
 const mongoose = require("mongoose");
 
-const MONGO_URI =
-  "mongodb+srv://alpha:camp@cluster0.ccgss.mongodb.net/restaurant-list?retryWrites=true&w=majority";
 //- 設定連線到 mongoDB
-mongoose.connect(MONGO_URI);
+const MONGODB_URI = process.env.MONGODB_URI;
+mongoose.connect(MONGODB_URI);
 
 //- 取得資料庫連線狀態
 const db = mongoose.connection;
