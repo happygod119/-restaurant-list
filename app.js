@@ -14,6 +14,7 @@ const methodOverride = require("method-override");
 require("./config/mongoose"); //- 引用mongoose;
 
 const routes = require("./routes"); //- 引用路由器
+const usePassport = require("./config/passport") //- 載入設定檔
 
 app.engine(
   "hbs",
@@ -42,6 +43,8 @@ app.use(
 app.use(express.static("public")); //使用public設定
 app.use(bodyParser.urlencoded({ extended: true })); //-使用body-parser
 app.use(methodOverride("_method")); //- 設定每一筆請求都會透過 methodOverride 進行前置處理
+
+usePassport(app) //- 呼叫 Passport 函式並傳入
 
 app.use(routes); //- 將 request 導入路由器
 
