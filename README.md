@@ -1,5 +1,13 @@
 # 我的餐廳清單
 
+### 登入畫面
+
+![登入畫面](./public/image/登入頁.png)
+
+### 註冊畫面
+
+![註冊畫面](./public/image/註冊頁.png)
+
 ### 使用者畫面
 
 ![我的餐廳清單](./public/image/new.jpg)
@@ -44,9 +52,18 @@ Express is listening on http://localhost:3000
 ## 開發工具
 
 - Node.js v14.16.0
-- Express ^4.17.2
+- Express ^4.17.3
 - Express-Handlebars ^3.0.0
+- Express-session 1.17.1
 - Bootstrap 4.3.1
 - Font-awesome 5.8.1
 - MongoDB
-- mongoose 6.0.5
+- mongoose 6.1.6
+- bcryptjs 2.4.3
+- body-parser 1.19.1
+- connect-flash 0.1.1
+- dotenv 8.2.0
+- method-override 3.0.0
+- passport 0.4.1
+- passport-facebook 3.0.0
+- passport-local 1.0.0
