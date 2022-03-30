@@ -12,9 +12,14 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
         </div>
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
-          <a href="/auth/facebook"><i class=" btn  btn-block fa-brands fa-facebook fa-4x mt-3"
-              style="font-size:48px;"></i></a>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <div class="card-body text-center">
+          <a href="/auth/facebook"><i class="fa-brands fa-facebook fa-4x mt-3" style="font-size:48px;"></i></a>
+          <a href="/auth/google">
+            <i class="fa fa-google fa-3x mt-3" style="color: red;"></i>
+          </a>
+        </div>
+
       </form>
       <p class="lead mt-4">
         No Account? <a href="/users/register">Register</a>

@@ -1,6 +1,11 @@
 FACEBOOK_ID=4958587010886820
 FACEBOOK_SECRET=693c2edea7b4fdf538e8edfac1a84df4
 FACEBOOK_CALLBACK=http://localhost:3000/auth/facebook/callback
+
+GOOGLE_ID=328299242001-fdt1v1nh22lc0gt7ppptaacvbvvk7ojh.apps.googleusercontent.com
+GOOGLE_SECRET=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
+GOOGLE_CALLBACK=http://localhost:3000/auth/google/callback
+
 SESSION_SECRET=ThisIsMySecret
 MONGODB_URI=mongodb+srv://alpha:camp@cluster0.ccgss.mongodb.net/restaurant-list?retryWrites=true&w=majority
 PORT=3000
