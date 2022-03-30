@@ -14,6 +14,9 @@
 
 ## 基本功能
 
+- 登入及註冊功能
+- Google登入
+- Facebook登入
 - 查看所有餐廳及簡介
 - 瀏覽餐廳的詳細資訊
 - 搜尋特定餐廳-以餐廳名稱或類別
@@ -66,4 +69,5 @@ Express is listening on http://localhost:3000
 - method-override 3.0.0
 - passport 0.4.1
 - passport-facebook 3.0.0
+- passport-google-oauth20 2.0.0
 - passport-local 1.0.0
